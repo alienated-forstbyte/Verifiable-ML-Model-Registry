@@ -6,7 +6,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 
-from dataset_loader import load_dataset
+from training.dataset_loader import load_dataset
 
 
 def hash_model(file_path):
