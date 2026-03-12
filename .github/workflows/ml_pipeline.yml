@@ -29,10 +29,20 @@ jobs:
         run: |
           python -m pipeline.train_pipeline
 
-      - name: Build Docker Image
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
         run: |
-          docker build -t ml-secure-api .
-          
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ml-secure-api:latest .
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/ml-secure-api:latest
+
       - name: Upload trained model artifact
         uses: actions/upload-artifact@v4
         with:
