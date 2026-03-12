@@ -27,6 +27,7 @@ jobs:
 
       - name: Run Training Pipeline
         run: |
+          export PYTHONPATH=$PYTHONPATH:.
           python pipeline/train_pipeline.py
 
       - name: Build Docker Image
