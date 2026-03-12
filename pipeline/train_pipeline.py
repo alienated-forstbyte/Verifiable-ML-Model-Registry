@@ -2,14 +2,20 @@ import json
 import hashlib
 import shutil
 from pathlib import Path
+from datetime import datetime
 
 from training.train_model import train_model
+from registry.hash_utils import file_hash
+
 
 MODEL_NAME = "spam_classifier"
 VERSION = "1.0"
 
 MODEL_DIR = Path("models")
 REGISTRY_PATH = Path("model_registry.json")
+
+DATASET_PATH = "data/spam.csv"
+TRAINING_CODE_PATH = "training/train_model.py"
 
 
 def compute_hash(file_path):
@@ -31,10 +37,20 @@ def update_registry(model_path, model_hash):
         with open(REGISTRY_PATH) as f:
             registry = json.load(f)
 
+    # lineage hashes
+    dataset_hash = file_hash(DATASET_PATH)
+    code_hash = file_hash(TRAINING_CODE_PATH)
+
+    print("Dataset SHA256:", dataset_hash)
+    print("Training Code SHA256:", code_hash)
+
     registry[MODEL_NAME] = {
         "version": VERSION,
         "model_path": str(model_path),
-        "sha256": model_hash
+        "model_sha256": model_hash,
+        "dataset_sha256": dataset_hash,
+        "training_code_sha256": code_hash,
+        "created_at": datetime.utcnow().isoformat()
     }
 
     with open(REGISTRY_PATH, "w") as f:
@@ -53,13 +69,13 @@ def main():
 
     shutil.move(model_file, versioned_path)
 
-    print("Computing hash...")
+    print("Computing model hash...")
 
     model_hash = compute_hash(versioned_path)
 
     print("Model SHA256:", model_hash)
 
-    print("Updating registry...")
+    print("Updating registry with lineage metadata...")
 
     update_registry(versioned_path, model_hash)
 

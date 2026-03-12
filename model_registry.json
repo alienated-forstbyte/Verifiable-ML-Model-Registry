@@ -2,6 +2,9 @@
   "spam_classifier": {
     "version": "1.0",
     "model_path": "models/spam_classifier_v1.0.pkl",
-    "sha256": "971cb0ec9fd63ae49d2d362cceaf0c9afec4d8b70d6b8db9244872614420051a"
+    "model_sha256": "a591b0d17d9eba9bc17003199977e7e1f2682a0abe0df25bb5d0dd45daff4706",
+    "dataset_sha256": "440e6ea9fa825578abfdd7b7932ef8393d72ef86c0c33f64676705ce40b1dfc2",
+    "training_code_sha256": "06ef7495aa5f65a94c0885ce11ef83310bb22aa441d5349bad16a1acf4c92497",
+    "created_at": "2026-03-12T10:00:03.212518"
   }
 }
