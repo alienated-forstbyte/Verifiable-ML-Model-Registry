@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pkl
+
+mlruns/
+
+node_modules/
+.env
+
+.DS_Store
