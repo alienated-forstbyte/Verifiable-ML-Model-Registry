@@ -8,7 +8,11 @@ from sklearn.pipeline import Pipeline
 
 from training.dataset_loader import load_dataset
 
+from pathlib import Path
 
+# fix for CI
+mlflow.set_tracking_uri("file:./mlruns")
+Path("mlruns").mkdir(exist_ok=True)
 def hash_model(file_path):
 
     sha256 = hashlib.sha256()

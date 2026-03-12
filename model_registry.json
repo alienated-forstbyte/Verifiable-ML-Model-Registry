@@ -2,6 +2,6 @@
   "spam_classifier": {
     "version": "1.0",
     "model_path": "models/spam_classifier_v1.0.pkl",
-    "sha256": "6c6f4b8132a6ae70bf0a09b30ba1bc4b15358e56d175da39fb367cc8aeb0b30f"
+    "sha256": "971cb0ec9fd63ae49d2d362cceaf0c9afec4d8b70d6b8db9244872614420051a"
   }
 }
