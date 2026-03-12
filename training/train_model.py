@@ -1,6 +1,7 @@
 import mlflow
 import joblib
 import hashlib
+from pathlib import Path
 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
@@ -8,11 +9,11 @@ from sklearn.pipeline import Pipeline
 
 from training.dataset_loader import load_dataset
 
-from pathlib import Path
-
-# fix for CI
+# ensure MLflow works in CI
 mlflow.set_tracking_uri("file:./mlruns")
 Path("mlruns").mkdir(exist_ok=True)
+
+
 def hash_model(file_path):
 
     sha256 = hashlib.sha256()
@@ -33,22 +34,23 @@ def train_model():
         ("model", MultinomialNB())
     ])
 
-    mlflow.start_run()
+    # ensure experiment exists
+    mlflow.set_experiment("spam_classifier_experiment")
 
-    pipeline.fit(X_train, y_train)
+    with mlflow.start_run():
 
-    model_path = "model.pkl"
+        pipeline.fit(X_train, y_train)
 
-    joblib.dump(pipeline, model_path)
+        model_path = "model.pkl"
 
-    model_hash = hash_model(model_path)
+        joblib.dump(pipeline, model_path)
 
-    print("Model SHA256:", model_hash)
+        model_hash = hash_model(model_path)
 
-    mlflow.log_artifact(model_path)
-    mlflow.log_param("model_sha256", model_hash)
+        print("Model SHA256:", model_hash)
 
-    mlflow.end_run()
+        mlflow.log_artifact(model_path)
+        mlflow.log_param("model_sha256", model_hash)
 
     print("Model trained, hashed, and logged.")
 
