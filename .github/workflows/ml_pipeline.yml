@@ -32,3 +32,11 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t ml-secure-api .
+          
+      - name: Upload trained model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-model
+          path: |
+            models/
+            model_registry.json
