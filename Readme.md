@@ -1,62 +1,80 @@
-Verifiable ML Model Registry
+```markdown
+# Verifiable ML Model Registry
 
-A secure MLOps pipeline for training, verifying, versioning, and deploying machine learning models with cryptographic integrity checks.
+A **secure MLOps pipeline** for training, verifying, versioning, and deploying machine learning models with cryptographic integrity checks.
 
-This project demonstrates how to build a production-style ML pipeline with:
+This project demonstrates how to build a **production-style ML pipeline** with:
 
-automated model training
+- Automated model training
+- Model integrity verification
+- Model lineage tracking
+- Containerized deployment
+- CI/CD automation
+- Model registry management
 
-model integrity verification
+The system ensures that trained models **cannot be tampered with without detection**.
 
-lineage tracking
+---
 
-containerized deployment
+# Architecture
 
-CI/CD automation
+```
 
-model registry management
-
-The system ensures that trained models cannot be tampered with without detection.
-
-Architecture
 Developer Push
-      ↓
+↓
 GitHub Actions CI/CD
-      ↓
+↓
 Training Pipeline
-      ↓
+↓
 Model Artifact
-      ↓
+↓
 Cryptographic Hash
-      ↓
+↓
 Model Registry (Lineage Tracking)
-      ↓
+↓
 Docker Image Build
-      ↓
+↓
 DockerHub Deployment
-      ↓
+↓
 FastAPI Inference Service
-Key Features
-Model Integrity Verification
 
-Each trained model is hashed using SHA-256.
+```
+
+---
+
+# Key Features
+
+## Model Integrity Verification
+
+Each trained model is hashed using **SHA-256**.
+
+```
 
 model.pkl
-   ↓
+↓
 SHA256 hash
-   ↓
+↓
 stored in model registry
 
-At deployment time the hash is verified to ensure the model has not been modified.
+```
 
-Model Registry
+At deployment time the hash is verified to ensure the model has **not been modified**.
+
+---
+
+## Model Registry
 
 The project maintains a registry file:
 
+```
+
 model_registry.json
+
+````
 
 Example:
 
+```json
 {
   "spam_classifier": {
     "version": "1.0",
@@ -67,29 +85,31 @@ Example:
     "created_at": "2026-03-12T10:00:00Z"
   }
 }
+````
 
-This provides full model lineage tracking.
+This provides full **model lineage tracking**.
 
-Model Lineage Tracking
+---
+
+## Model Lineage Tracking
 
 Each training run records:
 
-model hash
-
-dataset hash
-
-training code hash
-
-timestamp
-
-version
+* model hash
+* dataset hash
+* training code hash
+* timestamp
+* version
 
 This allows complete reproducibility of models.
 
-CI/CD Pipeline
+---
+
+## CI/CD Pipeline
 
 GitHub Actions automatically performs:
 
+```
 git push
    ↓
 install dependencies
@@ -103,18 +123,31 @@ update registry
 build docker image
    ↓
 push to DockerHub
-Containerized Deployment
+```
+
+---
+
+## Containerized Deployment
 
 The inference API is packaged as a Docker container.
 
 Run locally:
 
+```bash
 docker run -p 8000:8000 <dockerhub-username>/ml-secure-api
+```
 
 API documentation:
 
+```
 http://localhost:8000/docs
-Project Structure
+```
+
+---
+
+# Project Structure
+
+```
 .
 ├── api/
 │   └── main.py
@@ -138,52 +171,91 @@ Project Structure
 ├── requirements.txt
 ├── Dockerfile
 └── .github/workflows/ml_pipeline.yml
-Running Locally
-1 Install Dependencies
+```
+
+---
+
+# Running Locally
+
+## 1 Install Dependencies
+
+```
+bash
 pip install -r requirements.txt
-2 Run Training Pipeline
+```
+
+---
+
+## 2 Run Training Pipeline
+
+```
+bash
 python -m pipeline.train_pipeline
+```
 
 This will:
 
-train the model
+* Train the model
+* Compute hashes
+* Update the registry
 
-compute hashes
+---
 
-update the registry
+## 3 Run the API
 
-3 Run the API
+```bash
 uvicorn api.main:app --reload
+```
 
 Open:
 
+```
 http://localhost:8000/docs
-Running with Docker
+```
+
+---
+
+# Running with Docker
 
 Build container:
 
+```bash
 docker build -t ml-secure-api .
+```
 
 Run container:
 
+```bash
 docker run -p 8000:8000 ml-secure-api
-Example Prediction
+```
+
+---
+
+# Example Prediction
 
 Input:
 
+```
 free lottery win money now
+```
 
 Response:
 
+```json
 {
   "prediction": "spam"
 }
-Security Model
+```
 
-The system verifies model integrity using cryptographic hashing.
+---
+
+# Security Model
+
+The system verifies model integrity using **cryptographic hashing**.
 
 Verification flow:
 
+```
 model file
    ↓
 compute SHA256
@@ -191,41 +263,41 @@ compute SHA256
 compare with registry
    ↓
 load model if valid
+```
 
 If hashes do not match the API refuses to load the model.
 
-Future Improvements
+---
+
+# Future Improvements
 
 Potential extensions:
 
-blockchain-based model registry
+* Blockchain-based model registry
+* Model drift detection
+* Automated retraining
+* Feature store integration
+* MLflow tracking server
+* Kubernetes deployment
 
-model drift detection
+---
 
-automated retraining
+# Technologies Used
 
-feature store integration
+* Python
+* Scikit-learn
+* FastAPI
+* MLflow
+* Docker
+* GitHub Actions
+* SHA256 Cryptographic Hashing
 
-MLflow tracking server
+---
 
-Kubernetes deployment
-
-Technologies Used
-
-Python
-
-Scikit-learn
-
-FastAPI
-
-MLflow
-
-Docker
-
-GitHub Actions
-
-SHA256 Cryptographic Hashing
-
-License
+# License
 
 MIT License.
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2ad7bc6 (updated readme.md)
