@@ -294,10 +294,3 @@ Potential extensions:
 
 ---
 
-# License
-
-MIT License.
-<<<<<<< HEAD
-=======
-
->>>>>>> 2ad7bc6 (updated readme.md)
