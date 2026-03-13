@@ -229,5 +229,3 @@ SHA256 Cryptographic Hashing
 License
 
 MIT License.
-
-If you'd like, I can also help you add a clean architecture diagram and badges (CI status, DockerHub, license) so the README looks more professional and portfolio-ready.
